@@ -8,6 +8,7 @@ import pygame as pg
 WIDTH = 1100  # ゲームウィンドウの幅
 HEIGHT = 650  # ゲームウィンドウの高さ
 NUM_OF_BOMBS = 5  # 爆弾の個数 
+beams = []  # ビームを管理するリスト
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 
@@ -123,7 +124,7 @@ def main():
     clock = pg.time.Clock()
     tmr = 0
     score = 0  # スコアの初期値
-
+    beams = []
     font = pg.font.Font(None, 50)  # スコア表示用のフォント
 
     while True:
@@ -131,7 +132,7 @@ def main():
             if event.type == pg.QUIT:
                 return
             if event.type == pg.KEYDOWN and event.key == pg.K_SPACE:
-                beams = Beam(bird)  # スペースキー押下でビームを追加
+                beams.append(Beam(bird))  # スペースキー押下でビームを追加
 
         screen.blit(bg_img, [0, 0])
 
