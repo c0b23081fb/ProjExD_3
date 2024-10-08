@@ -70,17 +70,40 @@ class Bird:
 
 class Beam:
     def __init__(self, bird: "Bird"):
+        """
+        ビームの初期化メソッド。鳥の位置を基準にビームの初期位置を設定する。
+        画像をロードし、矩形（rect）を鳥の右側に配置する。
+        
+        引数:
+            bird (Bird): ビームを発射する鳥オブジェクト
+        """
+        # ビームの画像を読み込み、矩形領域を取得する
         self.img = pg.image.load("fig/beam.png")
         self.rct = self.img.get_rect()
+
+        # 鳥の中心の高さ（y座標）に合わせてビームの中心を設定
         self.rct.centery = bird.rct.centery
+        # ビームの左端を鳥の右端に合わせる（鳥の右側から発射される）
         self.rct.left = bird.rct.right
+
+        # ビームの移動速度を設定（x方向に+5の速度で移動、y方向は0）
         self.vx, self.vy = +5, 0
 
     def update(self, screen: pg.Surface):
-
+        """
+        ビームの更新メソッド。ビームの位置を毎フレーム更新し、画面に描画する。
+        画面外に出た場合は何も処理しない。
+        
+        引数:
+            screen (pg.Surface): ビームを描画する画面サーフェス
+        """
+        # ビームが画面内にあるかをチェック
         if check_bound(self.rct) == (True, True):
+            # ビームを速度に応じて移動させる
             self.rct.move_ip(self.vx, self.vy)
+            # 画面にビームを描画する
             screen.blit(self.img, self.rct)
+
 
 
 class Bomb:
